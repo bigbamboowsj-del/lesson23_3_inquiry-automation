@@ -23,6 +23,15 @@ st.set_page_config(
 
 load_dotenv()
 
+# 環境変数の確認
+import os
+if not os.getenv('OPENAI_API_KEY'):
+    st.error("⚠️ OPENAI_API_KEYが設定されていません。Streamlit Community Cloudの場合、Settings > Secrets で設定してください。")
+    st.stop()
+
+if not os.getenv('SERPAPI_API_KEY'):
+    st.warning("⚠️ SERPAPI_API_KEYが設定されていません。Web検索機能が利用できません。")
+
 logger = logging.getLogger(ct.LOGGER_NAME)
 
 
@@ -32,8 +41,16 @@ logger = logging.getLogger(ct.LOGGER_NAME)
 try:
     initialize()
 except Exception as e:
-    logger.error(f"{ct.INITIALIZE_ERROR_MESSAGE}\n{e}")
-    st.error(utils.build_error_message(ct.INITIALIZE_ERROR_MESSAGE), icon=ct.ERROR_ICON)
+    error_details = f"{ct.INITIALIZE_ERROR_MESSAGE}\n詳細エラー: {str(e)}"
+    logger.error(error_details)
+    st.error(error_details, icon=ct.ERROR_ICON)
+    
+    # デバッグ情報を表示
+    st.write("**デバッグ情報:**")
+    st.write(f"- Python環境: {st.__version__}")
+    import os
+    st.write(f"- OPENAI_API_KEY設定: {'設定済み' if os.getenv('OPENAI_API_KEY') else '未設定'}")
+    st.write(f"- SERPAPI_API_KEY設定: {'設定済み' if os.getenv('SERPAPI_API_KEY') else '未設定'}")
     st.stop()
 
 # アプリ起動時のログ出力
