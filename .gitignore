@@ -154,6 +154,8 @@ cython_debug/
 .db_company/
 .db_customer/
 .db_service/
+.db_shareholder_benefit/
+.db_creator_feature/
 .chroma/
 logs/
 
