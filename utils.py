@@ -130,6 +130,10 @@ def add_docs(folder_path, docs_all):
         folder_path: フォルダのパス
         docs_all: 各ファイルデータを格納するリスト
     """
+    # フォルダが存在しない場合は何もしない
+    if not os.path.exists(folder_path):
+        return
+    
     files = os.listdir(folder_path)
     for file in files:
         # ファイルの拡張子を取得
