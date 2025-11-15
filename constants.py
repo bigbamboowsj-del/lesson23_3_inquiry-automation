@@ -111,7 +111,7 @@ SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_DESCRIPTION = "顧客とのやりとり�
 SEARCH_SHAREHOLDER_BENEFIT_INFO_TOOL_NAME = "search_shareholder_benefit_tool"
 SEARCH_SHAREHOLDER_BENEFIT_INFO_TOOL_DESCRIPTION = "株主優待、株主特典、配当、投資家向け情報に関する質問の時に使う"
 SEARCH_CREATOR_FEATURE_INFO_TOOL_NAME = "search_creator_feature_tool"
-SEARCH_CREATOR_FEATURE_INFO_TOOL_DESCRIPTION = "EcoTee Creatorに関する情報を参照したい時に使う"
+SEARCH_CREATOR_FEATURE_INFO_TOOL_DESCRIPTION = "WebサービスEcoTee Creator、デザイン作成機能、利用方法、機能詳細に関する質問の時に使う"
 SEARCH_WEB_INFO_TOOL_NAME = "search_web_tool"
 SEARCH_WEB_INFO_TOOL_DESCRIPTION = "自社サービス「HealthX」に関する質問で、Web検索が必要と判断した場合に使う"
 
