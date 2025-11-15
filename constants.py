@@ -88,11 +88,15 @@ AI_AGENT_MAX_ITERATIONS = 5
 
 DB_SERVICE_PATH = "./.db_service"
 DB_CUSTOMER_PATH = "./.db_customer"
+DB_SHAREHOLDER_BENEFIT_PATH = "./.db_shareholder_benefit"
+DB_CREATOR_FEATURE_PATH = "./.db_creator_feature"
 
 DB_NAMES = {
     DB_COMPANY_PATH: f"{RAG_TOP_FOLDER_PATH}/company",
     DB_SERVICE_PATH: f"{RAG_TOP_FOLDER_PATH}/service",
-    DB_CUSTOMER_PATH: f"{RAG_TOP_FOLDER_PATH}/customer"
+    DB_CUSTOMER_PATH: f"{RAG_TOP_FOLDER_PATH}/customer",
+    DB_SHAREHOLDER_BENEFIT_PATH: f"{RAG_TOP_FOLDER_PATH}/shareholder_benefit",
+    DB_CREATOR_FEATURE_PATH: f"{RAG_TOP_FOLDER_PATH}/creator_feature"
 }
 
 AI_AGENT_MODE_ON = "利用する"
@@ -104,6 +108,10 @@ SEARCH_SERVICE_INFO_TOOL_NAME = "search_service_info_tool"
 SEARCH_SERVICE_INFO_TOOL_DESCRIPTION = "自社サービス「EcoTee」に関する情報を参照したい時に使う"
 SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_NAME = "search_customer_communication_tool"
 SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_DESCRIPTION = "顧客とのやりとりに関する情報を参照したい時に使う"
+SEARCH_SHAREHOLDER_BENEFIT_INFO_TOOL_NAME = "search_shareholder_benefit_tool"
+SEARCH_SHAREHOLDER_BENEFIT_INFO_TOOL_DESCRIPTION = "株主優待に関する情報を参照したい時に使う"
+SEARCH_CREATOR_FEATURE_INFO_TOOL_NAME = "search_creator_feature_tool"
+SEARCH_CREATOR_FEATURE_INFO_TOOL_DESCRIPTION = "EcoTee Creatorに関する情報を参照したい時に使う"
 SEARCH_WEB_INFO_TOOL_NAME = "search_web_tool"
 SEARCH_WEB_INFO_TOOL_DESCRIPTION = "自社サービス「HealthX」に関する質問で、Web検索が必要と判断した場合に使う"
 
