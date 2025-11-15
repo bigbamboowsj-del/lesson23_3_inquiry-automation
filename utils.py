@@ -78,6 +78,12 @@ def create_rag_chain(db_name):
         for key in doc.metadata:
             doc.metadata[key] = adjust_string(doc.metadata[key])
     
+    # ドキュメントが空の場合の処理
+    if not docs_all:
+        # 空のドキュメントでもChainを作成できるよう、ダミードキュメントを作成
+        from langchain.schema import Document
+        docs_all = [Document(page_content="データが見つかりませんでした。", metadata={"source": "empty"})]
+    
     text_splitter = CharacterTextSplitter(
         chunk_size=ct.CHUNK_SIZE,
         chunk_overlap=ct.CHUNK_OVERLAP,
@@ -89,9 +95,9 @@ def create_rag_chain(db_name):
 
     # すでに対象のデータベースが作成済みの場合は読み込み、未作成の場合は新規作成する
     if os.path.isdir(db_name):
-        db = Chroma(persist_directory=".db", embedding_function=embeddings)
+        db = Chroma(persist_directory=db_name, embedding_function=embeddings)
     else:
-        db = Chroma.from_documents(splitted_docs, embedding=embeddings, persist_directory=".db")
+        db = Chroma.from_documents(splitted_docs, embedding=embeddings, persist_directory=db_name)
 
     retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
 
@@ -157,13 +163,18 @@ def run_shareholder_benefit_chain(param):
     Returns:
         LLMからの回答
     """
-    # 株主優待データに関するChainを実行してLLMからの回答取得
-    ai_msg = st.session_state.shareholder_benefit_chain.invoke({"input": param, "chat_history": st.session_state.chat_history})
-
-    # 会話履歴への追加
-    st.session_state.chat_history.extend([HumanMessage(content=param), AIMessage(content=ai_msg["answer"])])
-
-    return ai_msg["answer"]
+    try:
+        # 株主優待データに関するChainを実行してLLMからの回答取得
+        ai_msg = st.session_state.shareholder_benefit_chain.invoke({"input": param, "chat_history": st.session_state.chat_history})
+        
+        # 会話履歴への追加
+        st.session_state.chat_history.extend([HumanMessage(content=param), AIMessage(content=ai_msg["answer"])])
+        
+        return ai_msg["answer"]
+    except Exception as e:
+        error_msg = "株主優待に関するデータが見つかりませんでした。データファイルが配置されていない可能性があります。"
+        st.session_state.chat_history.extend([HumanMessage(content=param), AIMessage(content=error_msg)])
+        return error_msg
 
 def run_creator_feature_chain(param):
     """
@@ -175,13 +186,18 @@ def run_creator_feature_chain(param):
     Returns:
         LLMからの回答
     """
-    # EcoTee Creatorに関するChainを実行してLLMからの回答取得
-    ai_msg = st.session_state.creator_feature_chain.invoke({"input": param, "chat_history": st.session_state.chat_history})
+    try:
+        # EcoTee Creatorに関するChainを実行してLLMからの回答取得
+        ai_msg = st.session_state.creator_feature_chain.invoke({"input": param, "chat_history": st.session_state.chat_history})
 
-    # 会話履歴に追加
-    st.session_state.chat_history.extend([HumanMessage(content=param),AIMessage(content=ai_msg["answer"])])
+        # 会話履歴に追加
+        st.session_state.chat_history.extend([HumanMessage(content=param),AIMessage(content=ai_msg["answer"])])
 
-    return ai_msg["answer"]
+        return ai_msg["answer"]
+    except Exception as e:
+        error_msg = "EcoTee Creatorに関するデータが見つかりませんでした。データファイルが配置されていない可能性があります。"
+        st.session_state.chat_history.extend([HumanMessage(content=param), AIMessage(content=error_msg)])
+        return error_msg
 
 def run_company_doc_chain(param):
     """
